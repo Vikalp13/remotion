@@ -1,9 +1,10 @@
 {
-  "name": "vikalp-ghost-job-video",
+  "name": "vikalp-tree-growth-video",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "render": "remotion render src/index.jsx GhostJob out/ghost-job.mp4 --codec=h264 --crf=20"
+    "render": "remotion render src/index.jsx GhostJob out/ghost-job.mp4 --codec=h264 --crf=20",
+    "render:tree": "remotion render src/tree.jsx TreeGrowth out/tree-growth-hindi.mp4 --codec=h264 --crf=20"
   },
   "dependencies": {
     "remotion": "4.0.300",
