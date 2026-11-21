@@ -13,7 +13,7 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 60
     defaults:
       run:
         working-directory: video-project
@@ -24,13 +24,21 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: video-project/package.json
-      - name: Install rendering and Hindi voice tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install rendering tools and Hindi fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg espeak-ng fonts-noto-core fonts-noto-extra
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-noto-extra
+      - name: Install Pocket TTS Hindi
+        run: |
+          git clone --depth 1 https://github.com/builderAbhishek/pocket-tts-hindi.git ../pocket-tts-hindi
+          python -m pip install --upgrade pip
+          python -m pip install -e ../pocket-tts-hindi scipy huggingface_hub
       - name: Install Node dependencies
         run: npm install
-      - name: Generate Hindi narration and music
+      - name: Generate Pocket TTS Hindi narration and soft music
         run: bash scripts/tree-audio.sh
       - name: Render educational MP4
         run: npm run render:tree
