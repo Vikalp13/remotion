@@ -1,0 +1,16 @@
+{
+  "name": "vikalp-ghost-job-video",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "render": "remotion render src/index.jsx GhostJob out/ghost-job.mp4 --codec=h264 --crf=20"
+  },
+  "dependencies": {
+    "remotion": "4.0.300",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@remotion/cli": "4.0.300"
+  }
+}
