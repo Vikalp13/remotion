@@ -1,6 +1,6 @@
 import React from "react";
 import {registerRoot} from "remotion";
-import {Composition, AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring} from "remotion";
+import {Composition, AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring, Audio, staticFile} from "remotion";
 
 const scenes = [
   {title:"एक छोटे बीज की बड़ी शुरुआत",sub:"हर विशाल पेड़ की शुरुआत एक छोटे बीज से होती है।",tag:"बीज मिट्टी में",kind:"seed",fact:"बीज के अंदर एक छोटा भ्रूणीय पौधा मौजूद होता है।"},
@@ -65,6 +65,8 @@ const Scene=({scene,index})=>{
 
 const Video=()=> <AbsoluteFill style={{background:"#dff3ff"}}>
  {scenes.map((scene,i)=><Sequence key={scene.kind} from={i*250} durationInFrames={250}><Scene scene={scene} index={i}/></Sequence>)}
+ <Audio src={staticFile("voice.wav")} volume={1}/>
+ <Audio src={staticFile("music.wav")} volume={0.10}/>
 </AbsoluteFill>;
 
 const Root=()=> <Composition id="TreeGrowth" component={Video} durationInFrames={1500} fps={25} width={1080} height={1920}/>;
