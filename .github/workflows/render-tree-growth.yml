@@ -1,0 +1,41 @@
+name: Render Hindi Tree Growth Explainer
+on:
+  push:
+    branches:
+      - video/tree-growth-explainer
+    paths:
+      - "video-project/**"
+      - ".github/workflows/render-tree-growth.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: video-project
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: video-project/package.json
+      - name: Install rendering and Hindi voice tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak-ng fonts-noto-core fonts-noto-extra
+      - name: Install Node dependencies
+        run: npm install
+      - name: Generate Hindi narration and music
+        run: bash scripts/tree-audio.sh
+      - name: Render educational MP4
+        run: npm run render:tree
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tree-growth-hindi-explainer
+          path: video-project/out/tree-growth-hindi.mp4
+          retention-days: 14
